@@ -70,6 +70,7 @@ public class Calculadora {
 
                 case 0:
                     System.out.println("Encerrando...");
+                    System.out.println("Até mais");
                     ope--;
                     break;
 
