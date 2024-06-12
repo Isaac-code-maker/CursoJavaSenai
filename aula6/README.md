@@ -1,0 +1,1 @@
+## Aula 6. Dedicada ao ensino do uso do método construtor e métodos geters e seters.
