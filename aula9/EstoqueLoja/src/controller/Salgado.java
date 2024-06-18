@@ -1,13 +1,16 @@
 package controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
 
-public class Salgado extends Produto{
+
+public class Salgado extends Produto {
 
     private String recheio;
 
-
+    public Salgado(String nome, int quantidade, double valor, LocalDate dataVence, String recheio) {
+        super(nome, quantidade, valor, dataVence);
+        this.recheio = recheio;
+    }
 
     public String getRecheio() {
         return recheio;
@@ -17,33 +20,40 @@ public class Salgado extends Produto{
         this.recheio = recheio;
     }
 
-    @SuppressWarnings("deprecation")
     @Override
-    public String validade(Date fabricacao){
-        SimpleDateFormat fs = new SimpleDateFormat("dd/MM/yyyy");
+    public LocalDate validade(LocalDate fabricacao) {
+        if (fabricacao == null) {
+            System.out.println("A data de fabricação não pode ser nula");
+        }
+        return fabricacao.plusDays(10); 
+    }
+    
 
-        fabricacao.setDate(fabricacao.getDate() + 2);
+    @Override
+    public LocalDate validade(LocalDate fabricacao, LocalDate validade) throws IllegalAccessException {
+        LocalDate hoje = LocalDate.now();
 
-        return fs.format(fabricacao);
+        if (validade.isAfter(hoje) || validade.isEqual(fabricacao)) {
+            return validade;
+        } else {
+            throw new IllegalAccessException("A data de validade não pode ser anterior à data de fabricação do produto");
+        }
     }
 
-    @SuppressWarnings("deprecation")
     @Override
-    public String validade(Date fabricacao, Date validadeAberto){
-        SimpleDateFormat fs = new SimpleDateFormat("dd/MM/yyyy");
-
-        validadeAberto.setDate(validadeAberto.getDate() - fabricacao.getDate());
-
-        return fs.format(validadeAberto);
+    public LocalDate validade(LocalDate fabricacao, LocalDate validade, LocalDate validadeAfter) throws IllegalAccessException {
+        if (validadeAfter != null) {
+            return validadeAfter;
+        } else {
+            return validade(fabricacao, validade);
+        }
     }
 
-    @SuppressWarnings("deprecation")
     @Override
-    public String validade(Date validade, Date fabricacao, Date validadeAberto){
-        SimpleDateFormat fs = new SimpleDateFormat("dd/MM/yyyy");
 
-        validade.setDate(validade.getDate() + 180);
-
-        return fs.format(validade);
+    public boolean isDentroDoPrazo() {
+        LocalDate hoje = LocalDate.now();
+        LocalDate validade = convertToLocalDateViaInstant(this.vence);
+        return hoje.isBefore(validade) || hoje.isEqual(validade);
     }
 }

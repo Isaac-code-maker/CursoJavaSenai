@@ -1,5 +1,6 @@
 package controller;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 public class Produto {
@@ -7,15 +8,20 @@ public class Produto {
     private String nome;
     private int quantidade;
     private double valor;
-    private Date vence;
+    protected LocalDate vence;
 
+    public Produto(String nome, int quantidade, double valor, LocalDate vence) {
+        this.nome = nome;
+        this.quantidade = quantidade;
+        this.valor = valor;
+        this.vence = vence;
+    }
 
-
-    public Date getVence() {
+    public LocalDate getVence() {
         return vence;
     }
 
-    public void setVence(Date data) {
+    public void setVence(LocalDate data) {
         this.vence = data;
     }
 
@@ -43,33 +49,45 @@ public class Produto {
         this.valor = valor;
     }
 
-    @SuppressWarnings("deprecation")
-    
-    public String validade(Date fabricacao){
-        SimpleDateFormat fs = new SimpleDateFormat("dd/MM/yyyy");
-
-        fabricacao.setDate(fabricacao.getDate() + 180);
-
-        return fs.format(fabricacao);
+    public LocalDate validade(LocalDate fabricacao) {
+        return fabricacao.plusDays(10);
     }
 
-    @SuppressWarnings("deprecation")
-    
-    public String validade(Date validade, Date validadeAberto){
-        SimpleDateFormat fs = new SimpleDateFormat("dd/MM/yyyy");
+    public LocalDate validade(LocalDate fabricacao, LocalDate validade) throws IllegalAccessException {
+        LocalDate hoje = LocalDate.now();
 
-        validadeAberto.setDate(validadeAberto.getDate() + 180);
-
-        return fs.format(validadeAberto);
+        if (validade.isAfter(hoje) || validade.isEqual(fabricacao)) {
+            return validade;
+        } else {
+            throw new IllegalAccessException("A data de validade não pode ser anterior à data de fabricação do produto");
+        }
     }
 
-    @SuppressWarnings("deprecation")
-    
-    public String validade(Date validade, Date fabricacao, Date validadeAberto){
-        SimpleDateFormat fs = new SimpleDateFormat("dd/MM/yyyy");
-
-        validade.setDate(validade.getDate() + 180);
-
-        return fs.format(validade);
+    public LocalDate validade(LocalDate fabricacao, LocalDate validade, LocalDate validadeAfter) throws IllegalAccessException {
+        if (validadeAfter != null) {
+            return validadeAfter;
+        } else {
+            return validade(fabricacao, validade);
+        }
     }
+
+    public boolean isDentroDoPrazo() {
+        LocalDate hoje = LocalDate.now();
+        LocalDate validade = convertToLocalDateViaInstant(this.getVence());
+        return hoje.isBefore(validade) || hoje.isEqual(validade);
+    }
+
+    
+    protected LocalDate convertToLocalDateViaInstant(LocalDate vence2) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'convertToLocalDateViaInstant'");
+    }
+
+    protected LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
+        return dateToConvert.toInstant()
+                            .atZone(ZoneId.systemDefault())
+                            .toLocalDate();
+    }
+
+    
 }
