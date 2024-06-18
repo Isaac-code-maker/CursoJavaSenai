@@ -8,6 +8,10 @@ public class App {
             Salgado[] vetor = new Salgado[5];
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+            LocalDate datavalidade = LocalDate.parse("01/12/2030", formatter);
+
+            LocalDate datavalidade2 = LocalDate.parse("01/12/2030", formatter);
             
        
             LocalDate dataVence = LocalDate.parse("21/06/2024", formatter);
@@ -45,7 +49,7 @@ public class App {
 
             //chamadas de método
             salgado1.validade(LocalDate.now(), dataVence);
-            salgado1.validade(LocalDate.now(), null, null);
+            salgado1.validade(LocalDate.now(), datavalidade, datavalidade2 );
 
         } catch (IllegalAccessException e){
             e.printStackTrace();

@@ -71,6 +71,7 @@ public class Produto {
         }
     }
 
+
     public boolean isDentroDoPrazo() {
         LocalDate hoje = LocalDate.now();
         LocalDate validade = convertToLocalDateViaInstant(this.getVence());
@@ -78,16 +79,14 @@ public class Produto {
     }
 
     
-    protected LocalDate convertToLocalDateViaInstant(LocalDate vence2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToLocalDateViaInstant'");
-    }
+    // protected LocalDate convertToLocalDateViaInstant(LocalDate vence2) {
+    //     // TODO Auto-generated method stub
+    //     throw new UnsupportedOperationException("Unimplemented method 'convertToLocalDateViaInstant'");
+    // }
 
-    protected LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
-        return dateToConvert.toInstant()
-                            .atZone(ZoneId.systemDefault())
-                            .toLocalDate();
+    protected LocalDate convertToLocalDateViaInstant(LocalDate dateToConvert) {
+        return dateToConvert;
+                            
+                            
     }
-
-    
 }
