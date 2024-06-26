@@ -39,4 +39,30 @@ public class ManipuladorArquivos {
         writer.close();
         scan.close();
     }
+
+    public static void gerarTabuada(String caminho)throws IOException{
+        BufferedWriter writer = new BufferedWriter(new FileWriter(caminho, true));
+
+        for(int i = 0, j = 100; i<= 100;i++, j--){
+            int resultado = i * j;
+            writer.append(i + " X " + j + " = " + resultado);
+            
+            writer.append("\n\n");
+        }
+
+        writer.close();
+    }
+
+    public static void gerarTabuadaReversa(String caminho)throws IOException{
+        BufferedWriter writer = new BufferedWriter(new FileWriter(caminho, true));
+
+        for(int i = 100, j = 1; j<= 100;i--, j++){
+            int resultado = i * j;
+            writer.append(i + " X " + j + " = " + resultado);
+            
+            writer.append("\n\n");
+        }
+
+        writer.close();
+    }
 }
