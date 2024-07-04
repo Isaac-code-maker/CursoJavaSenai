@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 
-public class App {
+public class JOptio {
     public static void main(String[] args){
 
         JTextField campoCEP = new JTextField(8);

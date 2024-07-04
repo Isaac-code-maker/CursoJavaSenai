@@ -5,6 +5,11 @@ public class App {
 
         ManipuladorArquivos.escrita(caminho);
         ManipuladorArquivos.leitura(caminho);
+<<<<<<< Updated upstream
+=======
+        // ManipuladorArquivos.gerarTabuada(caminho);
+        // ManipuladorArquivos.gerarTabuadaReversa(caminho);
+>>>>>>> Stashed changes
         
         
     }

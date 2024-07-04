@@ -11,7 +11,7 @@ public class ManipuladorArquivos {
         BufferedReader buff = new BufferedReader(new FileReader(caminho));
         String linha;
 
-        while ((linha = buff.readLine()) != null) {
+        while ((linha = buff.readLine()) == null) {
             System.out.println(linha);
         }
 
